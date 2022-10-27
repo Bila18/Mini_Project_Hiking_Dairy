@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hiking_dairy/views/bottom_nav_bar.dart';
+import 'package:hiking_dairy/views/home_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const routeName = '/welcome';
@@ -60,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       viewportFraction: 1,
                       height: 400,
                       autoPlay: true,
-                      autoPlayInterval: const Duration(seconds: 5),
+                      autoPlayInterval: const Duration(seconds: 3),
                     ),
                     items: quote,
                   ),
@@ -75,9 +77,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
-                      backgroundColor: Colors.green,
+                      backgroundColor: Color.fromARGB(255, 93, 70, 41),
                     ),
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed(BottomNavBar.routeName),
                     child: const Text('Get Started'),
                   ),
                 )
