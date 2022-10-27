@@ -24,12 +24,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
+              children: const [
+                Text(
                   "My Dairy",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.add))
+                // IconButton(
+                //     onPressed: () {
+                //       Navigator.of(context).pushNamed(FormDairy.routeName);
+                //     },
+                //     icon: const Icon(Icons.add))
               ],
             ),
             const SizedBox(
