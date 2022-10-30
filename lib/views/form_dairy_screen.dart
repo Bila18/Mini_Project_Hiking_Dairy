@@ -171,7 +171,9 @@ class _FormDairyState extends State<FormDairy> {
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       backgroundColor: Color.fromARGB(255, 93, 70, 41),
                     ),
-                    onPressed: () async {},
+                    onPressed: () async {
+                      _pickFile();
+                    },
                     child: const Text('Pick File'),
                   ),
                   SizedBox(
