@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hiking_dairy/viewModels/provider/dairy_provider.dart';
 import 'package:hiking_dairy/views/form_dairy_screen.dart';
 import 'package:hiking_dairy/views/bottom_nav_bar.dart';
 import 'package:hiking_dairy/views/home_screen.dart';
 import 'package:hiking_dairy/views/information_screen.dart';
 import 'package:hiking_dairy/views/welcome_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const HikingDairy());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (_) => DairyProvider(),
+    )
+  ], child: const HikingDairy()));
 }
 
 class HikingDairy extends StatelessWidget {

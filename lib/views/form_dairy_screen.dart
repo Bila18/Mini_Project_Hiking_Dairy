@@ -1,11 +1,14 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:hiking_dairy/models/dairy.dart';
+import 'package:hiking_dairy/viewModels/provider/dairy_provider.dart';
 import 'package:hiking_dairy/views/bottom_nav_bar.dart';
 import 'package:hiking_dairy/views/home_screen.dart';
 import 'package:hiking_dairy/views/information_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
+import 'package:provider/provider.dart';
 
 class FormDairy extends StatefulWidget {
   static const routeName = '/Form';
@@ -21,7 +24,8 @@ class _FormDairyState extends State<FormDairy> {
   final _ctrlLocation = TextEditingController();
   final _ctrlDairy = TextEditingController();
   final _ctrlDate = TextEditingController();
-  final _ctrlPic = TextEditingController();
+  final _ctrlPic = MaterialStatesController();
+  final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
   //Date Picker
   final curentDate = DateTime.now();
@@ -35,11 +39,46 @@ class _FormDairyState extends State<FormDairy> {
     final file = result.files.first;
   }
 
+  Dairy? editdairy;
+
+  void validateInput() {
+    formKey.currentState!.save();
+    final newDairy = Dairy(
+      name: _ctrlName.text,
+      location: _ctrlLocation.text,
+      date: _ctrlDate.text,
+      dairy: _ctrlDairy.text,
+      pic: _ctrlPic.toString(),
+    );
+    if (editdairy != null) {
+      newDairy.id = editdairy!.id;
+      Provider.of<DairyProvider>(context, listen: false).editDairy(newDairy);
+    } else {
+      Provider.of<DairyProvider>(context, listen: false).addDairy(newDairy);
+    }
+    if (formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Dairy berhasil disimpan'),
+        ),
+      );
+      //Navigator.pop(context);
+      Navigator.of(context).pushNamed(BottomNavBar.routeName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    editdairy = ModalRoute.of(context)!.settings.arguments as Dairy?;
+    if (editdairy != null) {
+      _ctrlName.text = editdairy!.name;
+      _ctrlLocation.text = editdairy!.location;
+      _ctrlDate.text = editdairy!.date;
+      _ctrlDairy.text = editdairy!.dairy;
+    }
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: SingleChildScrollView(
           child: Form(
               key: formKey,
@@ -57,16 +96,25 @@ class _FormDairyState extends State<FormDairy> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextField(
+                  TextFormField(
                     controller: _ctrlName,
                     decoration: const InputDecoration(
-                      hintText: 'Gunung Rinjani',
+                      hintText: 'Mountain Rinjani',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
                       ),
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please input mountain name';
+                      }
+                      return null;
+                    },
+                    onSaved: ((newValue) {
+                      if (newValue != null) _ctrlName.text = newValue;
+                    }),
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                   ),
@@ -81,7 +129,7 @@ class _FormDairyState extends State<FormDairy> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextField(
+                  TextFormField(
                     controller: _ctrlLocation,
                     decoration: const InputDecoration(
                       hintText: 'Lombok, Nusa Tenggara Barat',
@@ -93,6 +141,15 @@ class _FormDairyState extends State<FormDairy> {
                     ),
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please input location';
+                      }
+                      return null;
+                    },
+                    onSaved: ((newValue) {
+                      if (newValue != null) _ctrlLocation.text = newValue;
+                    }),
                   ),
                   const SizedBox(
                     height: 20,
@@ -130,6 +187,15 @@ class _FormDairyState extends State<FormDairy> {
                         });
                       }
                     },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please input date';
+                      }
+                      return null;
+                    },
+                    onSaved: ((newValue) {
+                      if (newValue != null) _ctrlDate.text = newValue;
+                    }),
                   ),
                   const SizedBox(
                     height: 20,
@@ -142,7 +208,7 @@ class _FormDairyState extends State<FormDairy> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextField(
+                  TextFormField(
                     maxLines: 10,
                     controller: _ctrlDairy,
                     decoration: const InputDecoration(
@@ -156,6 +222,15 @@ class _FormDairyState extends State<FormDairy> {
                     ),
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please input your dairy';
+                      }
+                      return null;
+                    },
+                    onSaved: ((newValue) {
+                      if (newValue != null) _ctrlDairy.text = newValue;
+                    }),
                   ),
                   const SizedBox(
                     height: 20,
@@ -166,10 +241,11 @@ class _FormDairyState extends State<FormDairy> {
                     textAlign: TextAlign.right,
                   ),
                   ElevatedButton(
+                    statesController: _ctrlPic,
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
-                      backgroundColor: Color.fromARGB(255, 93, 70, 41),
+                      backgroundColor: const Color.fromARGB(255, 93, 70, 41),
                     ),
                     onPressed: () async {
                       _pickFile();
@@ -183,11 +259,11 @@ class _FormDairyState extends State<FormDairy> {
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          backgroundColor: Color.fromARGB(255, 93, 70, 41),
+                          backgroundColor:
+                              const Color.fromARGB(255, 93, 70, 41),
                         ),
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(BottomNavBar.routeName);
+                          validateInput();
                         },
                         child: const Text('Submit')),
                   )
