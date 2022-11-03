@@ -10,18 +10,6 @@ class EmptyDairy extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 40,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              "My Dairy",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        const SizedBox(
           height: 60,
         ),
         Image.asset('assets/camp.png'),
