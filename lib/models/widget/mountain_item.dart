@@ -23,7 +23,7 @@ class MountainItem extends StatelessWidget {
                 offset: Offset.fromDirection(45),
               ),
             ],
-            color: const Color.fromARGB(255, 170, 139, 86),
+            color: const Color.fromARGB(255, 237, 223, 179),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(

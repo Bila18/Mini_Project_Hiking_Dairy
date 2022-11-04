@@ -32,7 +32,7 @@ class _FormDairyState extends State<FormDairy> {
 
   //File_Picker
   void _pickFile() async {
-    final result = await FilePicker.platform.pickFiles();
+    final result = await FilePicker.platform.pickFiles(type: FileType.image);
     if (result == null) return;
 
     // Mendapatkan file yang telah di pick

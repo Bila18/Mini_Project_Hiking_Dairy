@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hiking_dairy/models/dairy.dart';
 import 'package:hiking_dairy/viewModels/provider/dairy_provider.dart';
@@ -10,11 +13,9 @@ class DairyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PlatformFile? file;
     return Column(
       children: [
-        const SizedBox(
-          height: 10,
-        ),
         InkWell(
           //Detail Screen
           onTap: () {},
@@ -51,10 +52,10 @@ class DairyItem extends StatelessWidget {
             );
           },
           child: Container(
-            height: 250,
+            height: 200,
             padding: const EdgeInsets.all(10),
             width: double.infinity,
-            margin: const EdgeInsets.all(10),
+            // margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -69,18 +70,30 @@ class DairyItem extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Container(
+                SizedBox(
+                  height: 100,
                   width: double.infinity,
-                  margin: const EdgeInsets.only(bottom: 10),
+                  child: (file == null)
+                      ? Image.asset(
+                          'assets/mountain.jpg',
+                          fit: BoxFit.cover,
+                        )
+                      : Image.file(
+                          File(file.path.toString()),
+                          height: 100,
+                          width: double.infinity,
+                        ),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  // margin: const EdgeInsets.only(bottom: 10),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         dairy.name,
                         style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        width: 130,
                       ),
                       IconButton(
                         onPressed: () {
@@ -116,6 +129,7 @@ class DairyItem extends StatelessWidget {
                   ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       width: 200,
@@ -139,18 +153,18 @@ class DairyItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(bottom: 10),
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                  child: Text(
-                    dairy.dairy,
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
+                // Container(
+                //   width: double.infinity,
+                //   margin: const EdgeInsets.only(bottom: 10),
+                //   decoration:
+                //       BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                //   child: Text(
+                //     dairy.dairy,
+                //     style: const TextStyle(
+                //       fontSize: 14,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
