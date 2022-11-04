@@ -26,4 +26,12 @@ class DairyProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void getDairy(String id) {
+    final dairyIndex = _dairy.indexWhere((dairy) => dairy.id == id);
+    if (dairyIndex != -1) {
+      _dairy[dairyIndex];
+      notifyListeners();
+    }
+  }
 }
