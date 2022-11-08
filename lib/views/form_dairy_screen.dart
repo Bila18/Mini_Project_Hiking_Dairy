@@ -183,7 +183,7 @@ class _FormDairyState extends State<FormDairy> {
                       if (selectedDate != null) {
                         setState(() {
                           _ctrlDate.text =
-                              DateFormat('EEE, M/d/y').format(selectedDate);
+                              DateFormat('EEEE, M/d/y').format(selectedDate);
                         });
                       }
                     },

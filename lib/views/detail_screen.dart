@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:hiking_dairy/views/bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:hiking_dairy/models/dairy.dart';
 import 'package:hiking_dairy/viewModels/provider/dairy_provider.dart';
 import 'package:hiking_dairy/views/form_dairy_screen.dart';
 
 class DetailScreen extends StatefulWidget {
+  static const routeName = '/Detail';
   const DetailScreen({super.key});
 
   @override
@@ -58,9 +60,11 @@ class _DetailScreenState extends State<DetailScreen> {
                         margin: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
                             color: Colors.white30, shape: BoxShape.circle),
-                        // color: Colors.grey,
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(BottomNavBar.routeName);
+                          },
                           icon: const Icon(Icons.arrow_back),
                           iconSize: 30,
                         ),
@@ -69,7 +73,6 @@ class _DetailScreenState extends State<DetailScreen> {
                         margin: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
                             color: Colors.white30, shape: BoxShape.circle),
-                        // color: Colors.grey,
                         child: IconButton(
                           onPressed: () {},
                           icon: const Icon(Icons.favorite_border),

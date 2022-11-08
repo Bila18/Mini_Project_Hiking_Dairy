@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hiking_dairy/models/dairy.dart';
 import 'package:hiking_dairy/viewModels/provider/dairy_provider.dart';
+import 'package:hiking_dairy/views/detail_screen.dart';
 import 'package:hiking_dairy/views/form_dairy_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,14 @@ class DairyItem extends StatelessWidget {
       children: [
         InkWell(
           //Detail Screen
-          onTap: () {},
+          onTap: () {
+            Provider.of<DairyProvider>(context, listen: false)
+                .getDairy(dairy.id);
+            Navigator.of(context).pushNamed(
+              DetailScreen.routeName,
+              arguments: dairy,
+            );
+          },
           //Edit Screen
           onDoubleTap: () {
             showDialog(
@@ -52,10 +60,9 @@ class DairyItem extends StatelessWidget {
             );
           },
           child: Container(
-            height: 200,
+            height: 210,
             padding: const EdgeInsets.all(10),
             width: double.infinity,
-            // margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -117,6 +124,7 @@ class DairyItem extends StatelessWidget {
                                           Provider.of<DairyProvider>(context,
                                                   listen: false)
                                               .deletDairy(dairy.id);
+                                          Navigator.pop(context);
                                         },
                                         child: const Text('Yes'))
                                   ],
@@ -169,6 +177,9 @@ class DairyItem extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(
+          height: 20,
+        )
       ],
     );
   }
