@@ -18,18 +18,30 @@ class Information extends StatefulWidget {
 class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
+    final isLoading = Provider.of<MountainProvider>(context).state ==
+        MountainViewState.loading;
+    final isError =
+        Provider.of<MountainProvider>(context).state == MountainViewState.error;
     final mountains = Provider.of<MountainProvider>(context).items;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return MountainItem(mountain: mountains[index]);
-          },
-          itemCount: mountains.length,
-          shrinkWrap: true,
-        ),
+        child: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : isError
+                ? const Center(
+                    child: Text('Gagal mengambil data dari server'),
+                  )
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      return MountainItem(mountain: mountains[index]);
+                    },
+                    itemCount: mountains.length,
+                    shrinkWrap: true,
+                  ),
       ),
     );
   }
