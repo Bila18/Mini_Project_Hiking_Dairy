@@ -21,7 +21,7 @@ class DairyItem extends StatelessWidget {
           //Detail Screen
           onTap: () {
             Provider.of<DairyProvider>(context, listen: false)
-                .getDairy(dairy.id);
+                .getTaskById(dairy.id);
             Navigator.of(context).pushNamed(
               DetailScreen.routeName,
               arguments: dairy,
@@ -123,7 +123,7 @@ class DairyItem extends StatelessWidget {
                                         onPressed: () {
                                           Provider.of<DairyProvider>(context,
                                                   listen: false)
-                                              .deletDairy(dairy.id);
+                                              .deleteTask(dairy.id);
                                           Navigator.pop(context);
                                         },
                                         child: const Text('Yes'))

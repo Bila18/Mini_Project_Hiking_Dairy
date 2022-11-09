@@ -6,14 +6,14 @@ class Dairy {
   late String location;
   late String date;
   late String dairy;
-  late String pic;
+  String? pic;
 
   Dairy({
     required this.name,
     required this.location,
     required this.date,
     required this.dairy,
-    required this.pic,
+    this.pic,
   }) {
     id = nanoid(20);
   }

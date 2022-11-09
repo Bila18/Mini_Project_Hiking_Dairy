@@ -25,10 +25,10 @@ class DatabaseHelper {
         await db.execute('''
           CREATE TABLE $_tabelDairy (
             id TEXT PRIMARY KEY, 
-            name TEXT
-            location TEXT
-            date TEXT
-            dairy TEXT
+            name TEXT,
+            location TEXT,
+            date TEXT,
+            dairy TEXT,
             pic TEXT
           )
         ''');
@@ -38,12 +38,12 @@ class DatabaseHelper {
         await db.execute('''
           CREATE TABLE $_tabelDairy (
             id TEXT PRIMARY KEY, 
-            name TEXT
-            location TEXT
-            date TEXT
-            dairy TEXT
-            pic TEXT
-            status BOOL,
+            name TEXT,
+            location TEXT,
+            date TEXT,
+            dairy TEXT,
+            pic TEXT,
+            status BOOL
           )
         ''');
       },
@@ -63,6 +63,16 @@ class DatabaseHelper {
     return result.map((dairyMap) => Dairy.fromMap(dairyMap)).toList();
   }
 
+  Future<Dairy> getTaskById(String id) async {
+    final Database db = await database;
+    List<Map<String, dynamic>> results = await db.query(
+      _tabelDairy,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    return results.map((taskMap) => Dairy.fromMap(taskMap)).first;
+  }
+
   Future<bool> updateTask(Dairy value) async {
     final Database db = await database;
     final result = await db.update(
@@ -74,12 +84,12 @@ class DatabaseHelper {
     return result > 0 ? true : false;
   }
 
-  Future<bool> deletTask(Dairy value) async {
+  Future<bool> deletTask(String id) async {
     final Database db = await database;
     final result = await db.delete(
       _tabelDairy,
       where: 'id = ?',
-      whereArgs: [value.id],
+      whereArgs: [id],
     );
     return result > 0 ? true : false;
   }

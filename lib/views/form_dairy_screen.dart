@@ -24,7 +24,6 @@ class _FormDairyState extends State<FormDairy> {
   final _ctrlLocation = TextEditingController();
   final _ctrlDairy = TextEditingController();
   final _ctrlDate = TextEditingController();
-  final _ctrlPic = MaterialStatesController();
   final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
   //Date Picker
@@ -48,11 +47,11 @@ class _FormDairyState extends State<FormDairy> {
       location: _ctrlLocation.text,
       date: _ctrlDate.text,
       dairy: _ctrlDairy.text,
-      pic: _ctrlPic.toString(),
+      // pic: _ctrlPic.toString(),
     );
     if (editdairy != null) {
       newDairy.id = editdairy!.id;
-      Provider.of<DairyProvider>(context, listen: false).editDairy(newDairy);
+      Provider.of<DairyProvider>(context, listen: false).upadateTask(newDairy);
     } else {
       Provider.of<DairyProvider>(context, listen: false).addDairy(newDairy);
     }
@@ -241,7 +240,7 @@ class _FormDairyState extends State<FormDairy> {
                     textAlign: TextAlign.right,
                   ),
                   ElevatedButton(
-                    statesController: _ctrlPic,
+                    // statesController: _ctrlPic,
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
