@@ -1,37 +1,42 @@
 import 'package:flutter/foundation.dart';
 import 'package:hiking_dairy/models/dairy.dart';
+import 'package:hiking_dairy/viewModels/database/database_helper.dart';
 
 class DairyProvider with ChangeNotifier {
-  final List<Dairy> _dairy = [];
+  List<Dairy> _dairy = [];
+  late DatabaseHelper _dbHelper;
 
-  List<Dairy> get dairy => [..._dairy];
+  List<Dairy> get dairy => List.unmodifiable(_dairy);
 
-  void addDairy(Dairy newDairy) {
-    _dairy.add(newDairy);
+  DairyProvider() {
+    _dbHelper = DatabaseHelper();
+    _getAllDairy();
     notifyListeners();
   }
 
-  void editDairy(Dairy changeDairy) {
-    final dairyIndex = _dairy.indexWhere((dairy) => dairy.id == changeDairy.id);
-    if (dairyIndex != -1) {
-      _dairy[dairyIndex] = changeDairy;
-      notifyListeners();
-    }
+  Future<void> _getAllDairy() async {
+    _dairy = await _dbHelper.getTasks();
+    notifyListeners();
   }
 
-  void deletDairy(String id) {
-    final dairyIndex = _dairy.indexWhere((dairy) => dairy.id == id);
-    if (dairyIndex != -1) {
-      _dairy.removeAt(dairyIndex);
-      notifyListeners();
-    }
+  Future<void> addDairy(Dairy newDairy) async {
+    await _dbHelper.insertTask(newDairy);
+    notifyListeners();
   }
 
-  void getDairy(String id) {
-    final dairyIndex = _dairy.indexWhere((dairy) => dairy.id == id);
-    if (dairyIndex != -1) {
-      _dairy[dairyIndex];
-      notifyListeners();
-    }
+  Future<Dairy> getTaskById(String id) async {
+    return await _dbHelper.getTaskById(id);
+  }
+
+  Future<void> upadateTask(Dairy task) async {
+    final isSuccess = await _dbHelper.updateTask(task);
+    if (isSuccess) _getAllDairy();
+    notifyListeners();
+  }
+
+  Future<void> deleteTask(String id) async {
+    final isSuccess = await _dbHelper.deletTask(id);
+    if (isSuccess) _getAllDairy();
+    notifyListeners();
   }
 }

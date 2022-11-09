@@ -22,7 +22,7 @@ class _DetailScreenState extends State<DetailScreen> {
   String location = '';
   String date = '';
   String dairy = '';
-  String pic = '';
+  bool _isFav = true;
   @override
   Widget build(BuildContext context) {
     getDairy = ModalRoute.of(context)!.settings.arguments as Dairy?;
@@ -31,7 +31,6 @@ class _DetailScreenState extends State<DetailScreen> {
       location = getDairy!.location;
       date = getDairy!.date;
       dairy = getDairy!.dairy;
-      pic = getDairy!.pic;
     }
     PlatformFile? file;
     return Scaffold(
@@ -74,8 +73,19 @@ class _DetailScreenState extends State<DetailScreen> {
                         decoration: const BoxDecoration(
                             color: Colors.white30, shape: BoxShape.circle),
                         child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.favorite_border),
+                          onPressed: () {
+                            setState(() {
+                              _isFav = !_isFav;
+                            });
+                          },
+                          icon: _isFav
+                              ? const Icon(
+                                  Icons.favorite_border,
+                                )
+                              : const Icon(
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                ),
                           iconSize: 30,
                         ),
                       ),
