@@ -79,8 +79,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       backgroundColor: Color.fromARGB(255, 93, 70, 41),
                     ),
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed(BottomNavBar.routeName),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return const BottomNavBar();
+                          },
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            final tween = Tween(
+                              begin: const Offset(0.5, 0),
+                              end: Offset.zero,
+                            );
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
+                    },
                     child: const Text('Get Started'),
                   ),
                 )
