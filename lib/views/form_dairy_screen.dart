@@ -96,6 +96,7 @@ class _FormDairyState extends State<FormDairy> {
                     height: 10,
                   ),
                   TextFormField(
+                    key: const Key('Name'),
                     controller: _ctrlName,
                     decoration: const InputDecoration(
                       hintText: 'Mountain Rinjani',
@@ -129,6 +130,7 @@ class _FormDairyState extends State<FormDairy> {
                     height: 10,
                   ),
                   TextFormField(
+                    key: const Key('Location'),
                     controller: _ctrlLocation,
                     decoration: const InputDecoration(
                       hintText: 'Lombok, Nusa Tenggara Barat',
@@ -162,6 +164,7 @@ class _FormDairyState extends State<FormDairy> {
                     height: 10,
                   ),
                   TextFormField(
+                    key: const Key('Date'),
                     controller: _ctrlDate,
                     decoration: const InputDecoration(
                       hintText: 'dd/mm/yyyy',
@@ -208,6 +211,7 @@ class _FormDairyState extends State<FormDairy> {
                     height: 10,
                   ),
                   TextFormField(
+                    key: const Key('Dairy'),
                     maxLines: 10,
                     controller: _ctrlDairy,
                     decoration: const InputDecoration(
