@@ -24,11 +24,11 @@ class DairyProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Dairy> getTaskById(String id) async {
+  Future<Dairy> getDairyById(String id) async {
     return await _dbHelper.getDairyById(id);
   }
 
-  Future<void> upadateTask(Dairy dairy) async {
+  Future<void> upadateDairy(Dairy dairy) async {
     final isSuccess = await _dbHelper.updateDairy(dairy);
     if (isSuccess) _getAllDairy();
     notifyListeners();

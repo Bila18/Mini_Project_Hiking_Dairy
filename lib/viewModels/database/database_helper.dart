@@ -20,7 +20,7 @@ class DatabaseHelper {
 
   Future<Database> _initializeDb() async {
     var db = await openDatabase(
-      join(await getDatabasesPath(), 'task_db.db'),
+      join(await getDatabasesPath(), 'dairy_db.db'),
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE $_tabelDairy (
