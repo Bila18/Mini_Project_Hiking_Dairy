@@ -21,6 +21,7 @@ class DairyProvider with ChangeNotifier {
 
   Future<void> addDairy(Dairy newDairy) async {
     await _dbHelper.insertDairy(newDairy);
+    _getAllDairy();
     notifyListeners();
   }
 
