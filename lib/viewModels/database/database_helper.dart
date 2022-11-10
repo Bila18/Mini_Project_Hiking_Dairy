@@ -52,28 +52,28 @@ class DatabaseHelper {
     return db;
   }
 
-  Future<void> insertTask(Dairy value) async {
+  Future<void> insertDairy(Dairy value) async {
     final Database db = await database;
     await db.insert(_tabelDairy, value.toMap());
   }
 
-  Future<List<Dairy>> getTasks() async {
+  Future<List<Dairy>> getDairy() async {
     final Database db = await database;
     List<Map<String, dynamic>> result = await db.query(_tabelDairy);
     return result.map((dairyMap) => Dairy.fromMap(dairyMap)).toList();
   }
 
-  Future<Dairy> getTaskById(String id) async {
+  Future<Dairy> getDairyById(String id) async {
     final Database db = await database;
     List<Map<String, dynamic>> results = await db.query(
       _tabelDairy,
       where: 'id = ?',
       whereArgs: [id],
     );
-    return results.map((taskMap) => Dairy.fromMap(taskMap)).first;
+    return results.map((dairyMap) => Dairy.fromMap(dairyMap)).first;
   }
 
-  Future<bool> updateTask(Dairy value) async {
+  Future<bool> updateDairy(Dairy value) async {
     final Database db = await database;
     final result = await db.update(
       _tabelDairy,
@@ -84,7 +84,7 @@ class DatabaseHelper {
     return result > 0 ? true : false;
   }
 
-  Future<bool> deletTask(String id) async {
+  Future<bool> deletDairy(String id) async {
     final Database db = await database;
     final result = await db.delete(
       _tabelDairy,
