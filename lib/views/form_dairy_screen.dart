@@ -51,7 +51,7 @@ class _FormDairyState extends State<FormDairy> {
     );
     if (editdairy != null) {
       newDairy.id = editdairy!.id;
-      Provider.of<DairyProvider>(context, listen: false).upadateTask(newDairy);
+      Provider.of<DairyProvider>(context, listen: false).upadateDairy(newDairy);
     } else {
       Provider.of<DairyProvider>(context, listen: false).addDairy(newDairy);
     }

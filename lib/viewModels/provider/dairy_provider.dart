@@ -15,27 +15,27 @@ class DairyProvider with ChangeNotifier {
   }
 
   Future<void> _getAllDairy() async {
-    _dairy = await _dbHelper.getTasks();
+    _dairy = await _dbHelper.getDairy();
     notifyListeners();
   }
 
   Future<void> addDairy(Dairy newDairy) async {
-    await _dbHelper.insertTask(newDairy);
+    await _dbHelper.insertDairy(newDairy);
     notifyListeners();
   }
 
-  Future<Dairy> getTaskById(String id) async {
-    return await _dbHelper.getTaskById(id);
+  Future<Dairy> getDairyById(String id) async {
+    return await _dbHelper.getDairyById(id);
   }
 
-  Future<void> upadateTask(Dairy task) async {
-    final isSuccess = await _dbHelper.updateTask(task);
+  Future<void> upadateDairy(Dairy dairy) async {
+    final isSuccess = await _dbHelper.updateDairy(dairy);
     if (isSuccess) _getAllDairy();
     notifyListeners();
   }
 
-  Future<void> deleteTask(String id) async {
-    final isSuccess = await _dbHelper.deletTask(id);
+  Future<void> deleteDairy(String id) async {
+    final isSuccess = await _dbHelper.deletDairy(id);
     if (isSuccess) _getAllDairy();
     notifyListeners();
   }
